@@ -143,5 +143,9 @@ public class Patient implements refillNotification{
         + ", refill noification: " + this.refillNotification;
         return profile;
     }
-
+    // Override toString to display patient details
+    @Override
+    public String toString() {
+    	return "Patient Name: " + this.name + ", Age: " + this.age + ", Sickness: " + this.sick + ", Doctor: " + (doctor != null ? doctor.getName() : "No doctor assigned") + ", Refill Notification: " + (refillNotification ? "Enabled" : "Disabled"); 
+    }
 }

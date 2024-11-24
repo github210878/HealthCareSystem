@@ -28,67 +28,41 @@ public class UserInterface {
 		
 		ArrayList<Hospital> hospitalList = healthManager.hospitalList;
 		
-		while(!exit)
-		{
-			System.out.println("Please choose the Hospital you would like to visit:");
-			
-			for(int i = 1; i <= hospitalList.size(); i++)
-			{
-				System.out.println(i + ": " + hospitalList.get(i-1).getName());
-			}
-			
-			
-			inputString = inputScanner.next();
-			
-			try
-			{
-				int input = Integer.parseInt(inputString);
-				
-				
-				
-				
-				for(int i = 1; i <= hospitalList.size(); i++)
-				{
-					if(i == input)
-					{
-						//to be coded --> we add methods accessing selected hospital here
-						HospitalScreen s = new HospitalScreen(hospitalList.get(i-1));
-						exit = s.display();
-					}
-				}
-				{
-					if(inputString.equalsIgnoreCase("exit") || exit)
-					{
-						exit = true;
-						System.out.println("Shutting down");
-						break;
-					}
-					
-					
-					System.out.println("Invalid input, please try again:");
-				}
-			} catch(NumberFormatException e)
-			{
-				if(inputString.equalsIgnoreCase("exit"))
-				{
-					exit = true;
-				} else
-				{
-					System.out.println("Invalid input, please try again:");
-				}
-			}
-			
-			
-			
-		}
-		
-		inputScanner.close();
-		
-		
-		
-	}
-	
-	
-	
-	
+		while (!exit) {
+            System.out.println("\nPlease choose the Hospital you would like to visit:");
+
+            // Display list of hospitals
+            for (int i = 1; i <= hospitalList.size(); i++) {
+                System.out.println(i + ": " + hospitalList.get(i - 1).getName());
+            }
+            System.out.println("Type 'exit' to exit the program.");
+
+            inputString = inputScanner.next();
+
+            // Handle numerical input for hospital selection
+            try {
+                int input = Integer.parseInt(inputString);
+
+                if (input >= 1 && input <= hospitalList.size()) {
+                    // Open the selected hospital's menu
+                    HospitalScreen hospitalScreen = new HospitalScreen(hospitalList.get(input - 1));
+                    boolean backToMenu = !hospitalScreen.display();  // display() returns false on "back"
+
+                    if (backToMenu) {
+                        continue;  // Bring the user back to the hospital selection menu
+                    }
+                } else {
+                    System.out.println("Invalid selection. Please enter a number from the list.");
+                }
+            } catch (NumberFormatException e) {
+                if (inputString.equalsIgnoreCase("exit")) {
+                    exit = true;
+                    System.out.println("Shutting down...");
+                } else {
+                    System.out.println("Invalid input, please try again.");
+                }
+            }
+        }
+        inputScanner.close();
+    }
 }

@@ -18,7 +18,7 @@ public class Hospital {
 		contactInfo = null;
 	}
 
-	Hospital(String name, String address, String contactInfo) {
+	public Hospital(String name, String address, String contactInfo) {
 		this.name = name;
 		this.address = address;
 		this.contactInfo = contactInfo;
@@ -102,7 +102,7 @@ public class Hospital {
 
 	public boolean addReservation(Reservation reservation) {
 		if (reservations.contains(reservation)) return false;
-		reservations.remove(reservation);
+		reservations.add(reservation);
 		return true;
 	}
 
@@ -143,5 +143,18 @@ public class Hospital {
 
 	public int numReservations() {
 		return reservations.size();
+	}
+	
+	// Override method to display a string representation of the hospital
+	@Override
+	public String toString() {
+		return "Hospital{" +
+	               "name='" + name + '\'' +
+	               ", address='" + address + '\'' +
+	               ", contactInfo='" + contactInfo + '\'' +
+	               ", numPatients=" + numPatients() +
+	               ", numStaff=" + numStaff() +
+	               ", numReservations=" + numReservations() +
+	               '}';
 	}
 }
