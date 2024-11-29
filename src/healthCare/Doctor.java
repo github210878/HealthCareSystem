@@ -1,6 +1,9 @@
 package healthCare;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Date;
 
 /**
  * 
@@ -9,18 +12,23 @@ import java.util.ArrayList;
  */
 public class Doctor extends Staff {
     private ArrayList<Patient> listOfPatient;
+    private Set<Date> scheduledDates;
 
      public Doctor(String name, int age){
         super(name, age);
         this.listOfPatient = new ArrayList<>();
+        this.scheduledDates = new HashSet<>();
      }
-    
+
+     // Default constructor
      public Doctor() {
-    	 super();
+        super();
         this.name = "";
         this.age = 0;
-        // Default constructor
-    }
+        this.listOfPatient = new ArrayList<>();
+        this.scheduledDates = new HashSet<>();
+
+     }
 
     /* #--- Getter and Setters ---# */ 
     
@@ -95,6 +103,15 @@ public class Doctor extends Staff {
     public String toString(){
         return "Doctor: " + super.toString();
     }
-	
+
+    // method to update schedule
+    public void updateSchedule(Date date) {
+        scheduledDates.add(date); // Add the date to the scheduled dates set
+    }
+
+    // getter for scheduledDates
+    public Set<Date> getScheduledDates() {
+        return scheduledDates; // Retrieve scheduled dates if needed
+    }
 
 }

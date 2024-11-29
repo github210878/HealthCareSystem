@@ -59,7 +59,7 @@ public class Hospital {
 	{
 		for(Staff d : staff)
 		{
-			if(d.name.equalsIgnoreCase(name))
+			if(d.getName().equalsIgnoreCase(name))
 			{
 				return (Doctor)d;
 			}
@@ -95,7 +95,7 @@ public class Hospital {
 				return d;
 			}
 		}
-		
+
 		return null;
 	}
 	
@@ -143,5 +143,18 @@ public class Hospital {
 
 	public int numReservations() {
 		return reservations.size();
+	}
+
+	// method to display all doctors to patient
+	public void displayDoctors() {
+		System.out.println("List of our doctors: ");
+		for (Staff s : staff) {
+			System.out.println(s);
+		}
+	}
+
+	// getter for list of staff
+	public ArrayList<Staff> getStaff() {
+		return staff;
 	}
 }

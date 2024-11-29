@@ -144,4 +144,9 @@ public class Patient implements refillNotification{
         return profile;
     }
 
+    // add setter for patient's age
+    public void setAge(int age) {
+        this.age = age;
+    }
+
 }

@@ -25,70 +25,47 @@ public class UserInterface {
 	public void welcomeScreen()
 	{
 		System.out.println("Welcome to the Healthcare Network");
-		
+
 		ArrayList<Hospital> hospitalList = healthManager.hospitalList;
-		
+
 		while(!exit)
 		{
 			System.out.println("Please choose the Hospital you would like to visit:");
-			
+
 			for(int i = 1; i <= hospitalList.size(); i++)
 			{
 				System.out.println(i + ": " + hospitalList.get(i-1).getName());
 			}
-			
-			
+
 			inputString = inputScanner.next();
-			
+
+			if(inputString.equalsIgnoreCase("exit") || exit)
+			{
+				exit = true;
+				System.out.println("Shutting down");
+				break;
+			}
+
 			try
 			{
 				int input = Integer.parseInt(inputString);
-				
-				
-				
-				
 				for(int i = 1; i <= hospitalList.size(); i++)
 				{
 					if(i == input)
 					{
 						//to be coded --> we add methods accessing selected hospital here
-						HospitalScreen s = new HospitalScreen(hospitalList.get(i-1));
-						exit = s.display();
+						HospitalScreen hospitalScreen = new HospitalScreen(hospitalList.get(i-1));
+						exit = hospitalScreen.display();
 					}
-				}
-				{
-					if(inputString.equalsIgnoreCase("exit") || exit)
-					{
-						exit = true;
-						System.out.println("Shutting down");
-						break;
+					else {
+						System.out.println("Invalid input. Please enter a number or 'exit' to quit.");
 					}
-					
-					
-					System.out.println("Invalid input, please try again:");
 				}
 			} catch(NumberFormatException e)
 			{
-				if(inputString.equalsIgnoreCase("exit"))
-				{
-					exit = true;
-				} else
-				{
-					System.out.println("Invalid input, please try again:");
-				}
+				System.out.println("Invalid input. Please enter a number or 'exit' to quit.");
 			}
-			
-			
-			
 		}
-		
 		inputScanner.close();
-		
-		
-		
 	}
-	
-	
-	
-	
 }
