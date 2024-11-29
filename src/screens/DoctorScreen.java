@@ -28,7 +28,7 @@ public class DoctorScreen implements screen{
 			}
 			switch (input) {
 				case "1":
-					System.out.println("Patients: " + doctor.getPatientsList());
+					System.out.println("Patients: ");
 					break;
 				case "2":
 					System.out.println("Enter new schedule:");

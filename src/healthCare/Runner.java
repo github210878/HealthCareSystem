@@ -23,8 +23,8 @@ public class Runner {
 		hospitalList.add(sampleHospital);
 
 
-		UserInterface screen = new UserInterface(hospitalList);
-		screen.welcomeScreen();
+		UserInterface screen = new UserInterface(sampleHospital); 
+        screen.display(); // Use display instead of welcomeScreen
 	}
 
 }

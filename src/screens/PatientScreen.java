@@ -1,89 +1,62 @@
 package screens;
 
 import java.util.Scanner;
-
-import healthCare.Medication;
 import healthCare.Patient;
+import healthCare.Medication;
 
-public class PatientScreen implements screen{
-	
-	Scanner inputScanner;
-	String input;
+public class PatientScreen implements screen {
 
-	Patient patient;
-	public PatientScreen(Patient p)
-	{
-		patient = p;
-		inputScanner = new Scanner(System.in);
-	}
+    private Patient patient;
+    private Scanner inputScanner = new Scanner(System.in);
+    private boolean exit = false;
 
-	@Override
-	public boolean display() {
-		
-		boolean exit = false;
-		
-		while(!exit)
-		{
-			if(patient.getRefillNotification())
-			{
-				System.out.println("It's time to refill your medication! \n");
-			}
-			
-			System.out.println("Hello " + patient.getName() + ", How can we help you?");
-			System.out.println("Type 'Prescription' to check prescription status");
-			System.out.println("Type 'Doctor' to view your Doctor's contact information to set up an appointment");
-			
-			System.out.println("Type 'Back' to go back");
-			
-			input = inputScanner.next();
-			
-			if(input.equalsIgnoreCase("prescription"))
-			{
-				if(patient.getPatientPrescription().size() == 0)
-				{
-					System.out.println("You currently have no prescriptions");
-				} else
-				{
-					for(Medication m : patient.getPatientPrescription())
-					{
-						System.out.println("You have a prescription for " + m.getMedicationName());
-						System.out.println("Info: ");
-						System.out.println(m.medicationInfo());
-					}
-				}
-			} else if(input.equalsIgnoreCase("doctor"))
-			{
-				System.out.println("Doctor: Dr. " + patient.getDoctor().getName());
-			} else if(input.equalsIgnoreCase("exit"))
-			{
-				return true;
-			} else if(input.equalsIgnoreCase("back"))
-			{
-				return false;
-			} else
-			{
-				System.out.println("Unrecognized input, please try again");
-			}
-			
-			
-			
-			
-			
-			
-			
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		// TODO Auto-generated method stub
-		return true;
-	}
+    public PatientScreen(Patient patient) {
+        this.patient = patient;
+    }
 
+    @Override
+    public boolean display() {
+        while (!exit) {
+            if (patient.getRefillNotification()) {
+                System.out.println("It's time to refill your medication!\n");
+            }
+
+            System.out.println("Hello " + patient.getName() + ", how can we help you?");
+            System.out.println("1. Check prescription status");
+            System.out.println("2. View Doctor's contact information");
+            System.out.println("3. Back to main menu");
+
+            String input = inputScanner.nextLine();
+
+            switch (input) {
+                case "1":
+                    viewPrescription();
+                    break;
+                case "2":
+                    viewDoctorContact();
+                    break;
+                case "3":
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Unrecognized input, please try again.");
+            }
+        }
+        return exit;
+    }
+
+    private void viewPrescription() {
+        if (patient.getPatientPrescription().isEmpty()) {
+            System.out.println("You currently have no prescriptions.");
+        } else {
+            for (Medication m : patient.getPatientPrescription()) {
+                System.out.println("You have a prescription for " + m.getMedicationName());
+                System.out.println("Info: " + m.medicationInfo());
+            }
+        }
+    }
+
+    private void viewDoctorContact() {
+        System.out.println("Doctor: Dr. " + patient.getDoctor().getName());
+    }
 }

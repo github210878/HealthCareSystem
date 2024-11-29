@@ -1,94 +1,68 @@
 package screens;
 
 import java.util.Scanner;
-
-import healthCare.HealthCareSystem;
 import healthCare.Hospital;
+import healthCare.Patient;
+import healthCare.Doctor;
 
-import java.util.ArrayList;
+public class UserInterface implements screen {
 
-public class UserInterface {
-	
-	Scanner inputScanner;
-	HealthCareSystem healthManager;
-	String inputString;
-	boolean exit;
+    private Hospital hospital;
+    private Scanner scanner = new Scanner(System.in);
+    private boolean exit = false;
 
-	public UserInterface(ArrayList<Hospital> list)
-	{
-		inputScanner = new Scanner(System.in);
-		healthManager = new HealthCareSystem(list);
-		inputString = ""; 
-		exit = false;
-	}
-	
-	public void welcomeScreen()
-	{
-		System.out.println("Welcome to the Healthcare Network");
-		
-		ArrayList<Hospital> hospitalList = healthManager.hospitalList;
-		
-		while(!exit)
-		{
-			System.out.println("Please choose the Hospital you would like to visit:");
-			
-			for(int i = 1; i <= hospitalList.size(); i++)
-			{
-				System.out.println(i + ": " + hospitalList.get(i-1).getName());
-			}
-			
-			
-			inputString = inputScanner.next();
-			
-			try
-			{
-				int input = Integer.parseInt(inputString);
-				
-				
-				
-				
-				for(int i = 1; i <= hospitalList.size(); i++)
-				{
-					if(i == input)
-					{
-						//to be coded --> we add methods accessing selected hospital here
-						HospitalScreen s = new HospitalScreen(hospitalList.get(i-1));
-						exit = s.display();
-					}
-				}
-				{
-					if(inputString.equalsIgnoreCase("exit") || exit)
-					{
-						exit = true;
-						System.out.println("Shutting down");
-						break;
-					}
-					
-					
-					System.out.println("Invalid input, please try again:");
-				}
-			} catch(NumberFormatException e)
-			{
-				if(inputString.equalsIgnoreCase("exit"))
-				{
-					exit = true;
-				} else
-				{
-					System.out.println("Invalid input, please try again:");
-				}
-			}
-			
-			
-			
-		}
-		
-		inputScanner.close();
-		
-		
-		
-	}
-	
-	
-	
-	
+    public UserInterface(Hospital hospital) {
+        this.hospital = hospital;
+    }
+
+    @Override
+    public boolean display() {
+        while (!exit) {
+            System.out.println("\nWelcome to the Healthcare System");
+            System.out.println("Please type 'patient' or 'doctor' to enter the respective menu, or 'exit' to quit:");
+            String choice = scanner.nextLine().toLowerCase();
+
+            switch (choice) {
+                case "patient":
+                    selectPatient();
+                    break;
+                case "doctor":
+                    selectDoctor();
+                    break;
+                case "exit":
+                    exit = true;
+                    System.out.println("Exiting the Healthcare System.");
+                    break;
+                default:
+                    System.out.println("Invalid input. Please try again.");
+            }
+        }
+        return exit;
+    }
+
+    private void selectPatient() {
+        System.out.println("Enter the patient's name:");
+        String patientName = scanner.nextLine();
+
+        Patient patient = hospital.getPatient(patientName);
+        if (patient != null) {
+            PatientScreen patientScreen = new PatientScreen(patient);
+            patientScreen.display();
+        } else {
+            System.out.println("Patient not found.");
+        }
+    }
+
+    private void selectDoctor() {
+        System.out.println("Enter the doctor's name:");
+        String doctorName = scanner.nextLine();
+
+        Doctor doctor = hospital.getDoctor(doctorName);
+        if (doctor != null) {
+            DoctorScreen doctorScreen = new DoctorScreen(doctor);
+            doctorScreen.display();
+        } else {
+            System.out.println("Doctor not found.");
+        }
+    }
 }

@@ -144,4 +144,19 @@ public class Hospital {
 	public int numReservations() {
 		return reservations.size();
 	}
+
+	public ArrayList<Patient> getPatients() {
+        return patients;
+    }
+
+	public ArrayList<Doctor> getDoctors() {
+        ArrayList<Doctor> doctors = new ArrayList<>();
+        for (Staff s : staff) {
+            if (s instanceof Doctor) {
+                doctors.add((Doctor) s);
+            }
+        }
+        return doctors;
+    }
+
 }
